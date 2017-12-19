@@ -11,49 +11,49 @@ import UIKit
 @IBDesignable
 class BRTextView: UITextView, NSLayoutManagerDelegate {
     
-    @IBInspectable var placeholder: String = "" {
+    @IBInspectable open var placeholder: String = "" {
         didSet {
             lblPlaceholder.text = placeholder
         }
     }
     
-    @IBInspectable var placeholderColor: UIColor = UIColor(red: 0, green: 0, blue: 0.1, alpha: 0.22) {
+    @IBInspectable open var placeholderColor: UIColor = UIColor(red: 0, green: 0, blue: 0.1, alpha: 0.22) {
         didSet {
             lblPlaceholder.textColor = placeholderColor
         }
     }
     
-    @IBInspectable var needUnderLine: Bool = true {
+    @IBInspectable open var needUnderLine: Bool = true {
         didSet {
             underline.isHidden = !needUnderLine
         }
     }
     
-    @IBInspectable var underlineColor: UIColor = UIColor.gray {
+    @IBInspectable open var underlineColor: UIColor = UIColor.gray {
         didSet {
             underline.backgroundColor = underlineColor
         }
     }
     
-    var textInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
+    open var textInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
         didSet {
             updateMinAndMaxHeight()
         }
     }
     
-    @IBInspectable var ib_textInsets: String = "" {
+    @IBInspectable open var ib_textInsets: String = "" {
         didSet {
             textInsets = UIEdgeInsetsFromString(ib_textInsets)
         }
     }
     
-    @IBInspectable var lineSpacing: CGFloat = 6 {
+    @IBInspectable open var lineSpacing: CGFloat = 6 {
         didSet {
             updateMinAndMaxHeight()
         }
     }
     
-    @IBInspectable var maximumNumberOfLines: Int = 1 {
+    @IBInspectable open var maximumNumberOfLines: Int = 1 {
         didSet {
             updateMinAndMaxHeight()
         }
