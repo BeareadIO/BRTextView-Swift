@@ -9,70 +9,70 @@
 import UIKit
 
 @IBDesignable
-class BRTextView: UITextView, NSLayoutManagerDelegate {
+public class BRTextView: UITextView, NSLayoutManagerDelegate {
     
-    @IBInspectable open var placeholder: String = "" {
+    @IBInspectable public var placeholder: String = "" {
         didSet {
             lblPlaceholder.text = placeholder
         }
     }
     
-    @IBInspectable open var placeholderColor: UIColor = UIColor(red: 0, green: 0, blue: 0.1, alpha: 0.22) {
+    @IBInspectable public var placeholderColor: UIColor = UIColor(red: 0, green: 0, blue: 0.1, alpha: 0.22) {
         didSet {
             lblPlaceholder.textColor = placeholderColor
         }
     }
     
-    @IBInspectable open var needUnderLine: Bool = true {
+    @IBInspectable public var needUnderLine: Bool = true {
         didSet {
             underline.isHidden = !needUnderLine
         }
     }
     
-    @IBInspectable open var underlineColor: UIColor = UIColor.gray {
+    @IBInspectable public var underlineColor: UIColor = UIColor.gray {
         didSet {
             underline.backgroundColor = underlineColor
         }
     }
     
-    open var textInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
+    public var textInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
         didSet {
             updateMinAndMaxHeight()
         }
     }
     
-    @IBInspectable open var ib_textInsets: String = "" {
+    @IBInspectable public var ib_textInsets: String = "" {
         didSet {
             textInsets = UIEdgeInsetsFromString(ib_textInsets)
         }
     }
     
-    @IBInspectable open var lineSpacing: CGFloat = 6 {
+    @IBInspectable public var lineSpacing: CGFloat = 6 {
         didSet {
             updateMinAndMaxHeight()
         }
     }
     
-    @IBInspectable open var maximumNumberOfLines: Int = 1 {
+    @IBInspectable public var maximumNumberOfLines: Int = 1 {
         didSet {
             updateMinAndMaxHeight()
         }
     }
     
-    override var textAlignment: NSTextAlignment {
+    override public var textAlignment: NSTextAlignment {
         didSet {
             lblPlaceholder.textAlignment = textAlignment
         }
     }
     
-    override var font: UIFont? {
+    override public var font: UIFont? {
         didSet {
             lblPlaceholder.font = font!
             updateMinAndMaxHeight()
         }
     }
     
-    override var text: String! {
+    override public var text: String! {
         didSet {
             lblPlaceholder.isHidden = text.count > 0
         }
@@ -100,7 +100,7 @@ class BRTextView: UITextView, NSLayoutManagerDelegate {
         NotificationCenter().removeObserver(self)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         propertyInit()
         updateUI()
@@ -112,12 +112,12 @@ class BRTextView: UITextView, NSLayoutManagerDelegate {
         updateUI()
     }
     
-    override func awakeFromNib() {
+    override public func awakeFromNib() {
         super.awakeFromNib()
         updateUI()
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         textContainer.lineFragmentPadding = 0
@@ -133,11 +133,11 @@ class BRTextView: UITextView, NSLayoutManagerDelegate {
         updateFrame()
     }
     
-    fileprivate func propertyInit() {
+    private func propertyInit() {
         font = UIFont.systemFont(ofSize: 17)
     }
     
-    fileprivate func updateUI() {
+    private func updateUI() {
         addSubview(underline)
         addSubview(lblPlaceholder)
         layoutManager.delegate = self
@@ -147,25 +147,25 @@ class BRTextView: UITextView, NSLayoutManagerDelegate {
         invalidateIntrinsicContentSize()
     }
     
-    fileprivate func updateFrame() {
+    private func updateFrame() {
         lblPlaceholder.frame = CGRect(x: textContainerInset.left, y: textContainerInset.top, width: contentSize.width - textContainerInset.left - textContainerInset.right, height: contentSize.height - textContainerInset.top - textContainerInset.bottom)
         underline.frame = CGRect(x: 0, y: bounds.size.height - 1 + bounds.origin.y, width: bounds.size.width, height: 1)
     }
     
-    override func prepareForInterfaceBuilder() {
+    override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         
         lblPlaceholder.frame = CGRect(x: textContainerInset.left, y: textContainerInset.top, width: contentSize.width - textContainerInset.left - textContainerInset.right, height: contentSize.height - textContainerInset.top - textContainerInset.bottom)
         underline.frame = CGRect(x: 0, y: bounds.size.height - 1 + bounds.origin.y, width: bounds.size.width, height: 1)
     }
     
-    fileprivate func addObserverOrAction() {
+    private func addObserverOrAction() {
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidChange), name: .UITextViewTextDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidBegin), name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidEnd), name: .UITextViewTextDidEndEditing, object: nil)
     }
     
-    fileprivate func intrinsicContentSize() -> CGSize {
+    private func intrinsicContentSize() -> CGSize {
         var height = sizeThatFits(CGSize(width: bounds.size.width, height: CGFloat(MAXFLOAT))).height
         if (minHeight > 0) {
             height = height > minHeight ? height : minHeight;
@@ -176,14 +176,14 @@ class BRTextView: UITextView, NSLayoutManagerDelegate {
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
     
-    fileprivate func updateMinAndMaxHeight() {
+    private func updateMinAndMaxHeight() {
         maxHeight = CGFloat(maximumNumberOfLines) * font!.lineHeight + CGFloat(maximumNumberOfLines) * lineSpacing + textInsets.top + textInsets.bottom
         minHeight = font!.lineHeight + lineSpacing + textInsets.top + textInsets.bottom
         setNeedsLayout()
         invalidateIntrinsicContentSize()
     }
     
-    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+    public func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
         return lineSpacing
     }
     
