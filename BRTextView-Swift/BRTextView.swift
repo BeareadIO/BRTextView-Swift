@@ -100,6 +100,17 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
         NotificationCenter().removeObserver(self)
     }
     
+    override public var intrinsicContentSize: CGSize {
+        var height = sizeThatFits(CGSize(width: bounds.size.width, height: CGFloat(MAXFLOAT))).height
+        if (minHeight > 0) {
+            height = height > minHeight ? height : minHeight;
+        }
+        if (maxHeight > 0) {
+            height = height > maxHeight ? maxHeight : height;
+        }
+        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         propertyInit()
@@ -163,17 +174,6 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidChange), name: .UITextViewTextDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidBegin), name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(inputDidEnd), name: .UITextViewTextDidEndEditing, object: nil)
-    }
-    
-    private func intrinsicContentSize() -> CGSize {
-        var height = sizeThatFits(CGSize(width: bounds.size.width, height: CGFloat(MAXFLOAT))).height
-        if (minHeight > 0) {
-            height = height > minHeight ? height : minHeight;
-        }
-        if (maxHeight > 0) {
-            height = height > maxHeight ? maxHeight : height;
-        }
-        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
     
     private func updateMinAndMaxHeight() {
