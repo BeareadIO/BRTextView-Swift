@@ -75,6 +75,7 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
     override public var text: String! {
         didSet {
             lblPlaceholder.isHidden = text.count > 0
+            invalidateIntrinsicContentSize()
         }
     }
     
