@@ -118,7 +118,7 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
         updateUI()
     }
     
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
+    override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         propertyInit()
         updateUI()
