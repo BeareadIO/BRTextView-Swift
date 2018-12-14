@@ -35,7 +35,7 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
         }
     }
     
-    public var textInsets: UIEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0) {
+    public var textInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             updateMinAndMaxHeight()
         }
@@ -43,7 +43,7 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
     
     @IBInspectable public var ib_textInsets: String = "" {
         didSet {
-            textInsets = UIEdgeInsetsFromString(ib_textInsets)
+            textInsets = NSCoder.uiEdgeInsets(for: ib_textInsets)
         }
     }
     
@@ -109,7 +109,7 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
         if (maxHeight > 0) {
             height = height > maxHeight ? maxHeight : height;
         }
-        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
+        return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -172,9 +172,9 @@ public class BRTextView: UITextView, NSLayoutManagerDelegate {
     }
     
     private func addObserverOrAction() {
-        NotificationCenter.default.addObserver(self, selector: #selector(inputDidChange), name: .UITextViewTextDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(inputDidBegin), name: .UITextViewTextDidBeginEditing, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(inputDidEnd), name: .UITextViewTextDidEndEditing, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inputDidChange), name: UITextView.textDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inputDidBegin), name: UITextView.textDidBeginEditingNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inputDidEnd), name: UITextView.textDidEndEditingNotification, object: nil)
     }
     
     private func updateMinAndMaxHeight() {
