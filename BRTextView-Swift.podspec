@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "BRTextView-Swift"
-  s.version      = "0.0.7"
+  s.version      = "0.0.8"
   s.summary      = "A Swift implementation of BRTextView."
 
   # This description is used to generate tags and improve search results.
